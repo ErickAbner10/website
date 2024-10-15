@@ -1,0 +1,224 @@
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galería Interactiva de Imágenes</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .current-image-container {
+            position: relative;
+            max-width: 400px;
+            height: auto;
+            margin-bottom: 20px;
+        }
+        .current-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .arrow-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 10px;
+        }
+        .arrow {
+            background-color: #ffffff;
+            border: none;
+            cursor: pointer;
+            padding: 10px 20px;
+            margin: 0 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        .upload-btn-wrapper {
+            margin: 20px 0;
+        }
+        .custom-button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            display: inline-block;
+        }
+
+  
+
+        .borrar {
+            margin: 20px;
+        }
+        .gallery-container {
+            display: flex;
+            justify-content: space-between;
+            max-width: 1200px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a class="lista-galeria-1" href="index.html">Inicio</a></li>
+        <a class="lista-galeria-2" href="listas.html">Acerca de listas</a></li>
+        <a class="lista-galeria-3" href="galeria.html">Galería</a></li>
+        <a class="lista-galeria-4" href="contacto.html">Contacto</a></li>
+    </nav>
+
+    <h1>Galería Interactiva de Imágenes</h1>
+
+    <div class="gallery-container">
+        <!-- Primera opción de galería -->
+        <div class="upload-btn-wrapper">
+            <button class="custom-button">Subir Imagen 1</button>
+            <input type="file" class="image-input" accept="image/*" style="display: none;">
+        </div>
+        <div class="current-image-container">
+            <img class="current-image" id="currentImage1" src="" alt="Imagen actual 1">
+        </div>
+        <div class="arrow-container">
+            <button class="arrow left" data-gallery="1">&larr;</button>
+            <button class="arrow right" data-gallery="1">&rarr;</button>
+        </div>
+        <div class="borrar">
+            <button class="delete-image-btn" data-gallery="1" class="custom-button">Eliminar Imagen 1</button>
+        </div>
+
+        <!-- Segunda opción de galería -->
+        <div class="upload-btn-wrapper">
+            <button class="custom-button">Subir Imagen 2</button>
+            <input type="file" class="image-input" accept="image/*" style="display: none;">
+        </div>
+        <div class="current-image-container">
+            <img class="current-image" id="currentImage2" src="" alt="Imagen actual 2">
+        </div>
+        <div class="arrow-container">
+            <button class="arrow left" data-gallery="2">&larr;</button>
+            <button class="arrow right" data-gallery="2">&rarr;</button>
+        </div>
+        <div class="borrar">
+            <button class="delete-image-btn" data-gallery="2" class="custom-button">Eliminar Imagen 2</button>
+        </div>
+
+        <!-- Tercera opción de galería -->
+        <div class="upload-btn-wrapper">
+            <button class="custom-button">Subir Imagen 3</button>
+            <input type="file" class="image-input" accept="image/*" style="display: none;">
+        </div>
+        <div class="current-image-container">
+            <img class="current-image" id="currentImage3" src="" alt="Imagen actual 3">
+        </div>
+        <div class="arrow-container">
+            <button class="arrow left" data-gallery="3">&larr;</button>
+            <button class="arrow right" data-gallery="3">&rarr;</button>
+        </div>
+        <div class="borrar">
+            <button class="delete-image-btn" data-gallery="3" class="custom-button">Eliminar Imagen 3</button>
+        </div>
+    </div>
+
+    <script>
+        const imageInputs = document.querySelectorAll('.image-input');
+        const currentImages = {
+            1: document.getElementById('currentImage1'),
+            2: document.getElementById('currentImage2'),
+            3: document.getElementById('currentImage3')
+        };
+        const deleteImageBtns = document.querySelectorAll('.delete-image-btn');
+        const arrows = document.querySelectorAll('.arrow');
+    
+        let galleries = {
+            1: { images: JSON.parse(localStorage.getItem('images1')) || [], index: 0 },
+            2: { images: JSON.parse(localStorage.getItem('images2')) || [], index: 0 },
+            3: { images: JSON.parse(localStorage.getItem('images3')) || [], index: 0 }
+        };
+    
+        // Función para guardar imágenes en localStorage
+        function saveToLocalStorage(gallery) {
+            localStorage.setItem(`images${gallery}`, JSON.stringify(galleries[gallery].images));
+        }
+    
+        // Cargar la imagen al hacer clic en el botón de subida
+        document.querySelectorAll('.upload-btn-wrapper button').forEach((button, index) => {
+            button.addEventListener('click', () => {
+                imageInputs[index].click();
+            });
+        });
+    
+        // Guardar la imagen y actualizar el localStorage
+        imageInputs.forEach((input, index) => {
+            input.addEventListener('change', () => {
+                const gallery = index + 1;
+                const file = input.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onloadend = () => {
+                        galleries[gallery].images.push({ src: reader.result });
+                        saveToLocalStorage(gallery);
+                        displayImage(gallery, galleries[gallery].images.length - 1);
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+        });
+    
+        // Navegar hacia la imagen anterior
+        arrows.forEach((arrow) => {
+            arrow.addEventListener('click', () => {
+                const gallery = arrow.getAttribute('data-gallery');
+                if (galleries[gallery].images.length > 0) {
+                    if (arrow.classList.contains('left')) {
+                        galleries[gallery].index = (galleries[gallery].index === 0) ? galleries[gallery].images.length - 1 : galleries[gallery].index - 1;
+                    } else {
+                        galleries[gallery].index = (galleries[gallery].index === galleries[gallery].images.length - 1) ? 0 : galleries[gallery].index + 1;
+                    }
+                    displayImage(gallery, galleries[gallery].index);
+                }
+            });
+        });
+    
+        // Eliminar la imagen actual
+        deleteImageBtns.forEach((btn) => {
+            btn.addEventListener('click', () => {
+                const gallery = btn.getAttribute('data-gallery');
+                if (galleries[gallery].images.length > 0) {
+                    galleries[gallery].images.splice(galleries[gallery].index, 1);
+                    if (galleries[gallery].index >= galleries[gallery].images.length) {
+                        galleries[gallery].index = 0;
+                    }
+                    saveToLocalStorage(gallery);
+                    displayImage(gallery, galleries[gallery].index);
+                }
+            });
+        });
+    
+        // Función para mostrar la imagen seleccionada
+        function displayImage(gallery, index) {
+            if (galleries[gallery].images.length > 0) {
+                currentImages[gallery].src = galleries[gallery].images[index].src;
+                currentImages[gallery].style.display = 'block';
+            } else {
+                currentImages[gallery].src = '';
+                currentImages[gallery].style.display = 'none';
+            }
+        }
+    
+        // Cargar imágenes guardadas desde el localStorage al cargar la página
+        window.addEventListener('load', () => {
+            for (const [gallery, data] of Object.entries(galleries)) {
+                if (data.images.length > 0) {
+                    displayImage(gallery, data.index);
+                }
+            }
+        });
+    </script>
+</body>
+</html>

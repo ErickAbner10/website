@@ -1,0 +1,637 @@
+@view-transition {
+  navigation: auto;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 5.5s;
+}
+
+::view-transition-old(anima) {
+  animation-name: scaleOut;
+}
+
+::view-transition-new(anima) {
+  animation-name: scaleIn;
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+@keyframes scaleOut {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(0);
+  }
+}
+
+
+:root {
+  --font-family: "Oswald", sans-serif;
+  --primary-color: hsl(210, 3%, 11%);
+  --secondary-color: hsl(240, 3%, 8%);
+  --text-color: hsl(0, 3%, 14%);
+  --bg-color: hsl(0, 0%, 90%);
+  --bg-secondary-color: hsl(0, 2%, 48%);
+  --transition: color 0.9s, background-color 0.5s ease-in-out;
+  --box-shadow-light: 0px 5px 10px 2px rgba(0, 0, 0, 0.7);
+  /* --text-shadow-ligth: 0px 5px 10px 2px rgba(24, 22, 22, 0.7); */
+  --text-shadow-ligth: 1px 1px 2px rgba(24, 14, 14, 0.8);
+  --box-shadow-dark: 0px 5px 10px 2px rgba(168, 163, 163, 0.7);
+  --text-shadow-dark: 0px 5px 10px 2px rgba(250, 246, 246, 0.7);
+}
+
+/* Establece margen y relleno a cero para el cuerpo y el HTML */
+body,
+html {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: var(--transition);
+}
+
+a,
+h2,
+h3 {
+  color: var(--primary-color);
+}
+
+/* Modo oscuro - modo oscuro - modo oscuro */
+body.dark {
+  --text-color: hsl(0, 24%, 94%);
+  --bg-color: hsl(0, 2%, 16%);
+}
+
+.header {
+  position: fixed;
+  height: 80px;
+  margin-left: 300px;
+  padding: 0.7em 0.3em;
+  transition: var(--transition);
+  z-index: 20;
+}
+
+.toggle-theme {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 12%;
+  cursor: pointer;
+}
+
+.toggle-theme__icon {
+  margin-right: 0.5em;
+  width: 30px;
+}
+
+.toggle-theme__text {
+  font-size: 0.6rem;
+  padding-left: 5%;
+  padding-right: 5%;
+  border-radius: 5px;
+  box-shadow: 0px 0px 5px;
+}
+
+.colors {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 20px;
+  width: 100px;
+}
+
+.colors__item {
+  width: 20px;
+  height: 20px;
+  border: 1px solid var(--tex-color);
+  background-color: var(--primary-color);
+  cursor: pointer;
+}
+
+.colors__item--blue {
+  --primary-color: hsl(214, 83%, 42%);
+}
+
+.colors__item--green {
+  --primary-color: hsl(120, 91%, 35%);
+}
+
+.colors__item--purple {
+  --primary-color: hsl(276, 94%, 41%);
+}
+
+.colors__item--orange {
+  --primary-color: hsl(46, 94%, 37%);
+}
+
+.background-image {
+  display: block;
+  background-color: #484646;
+  position: fixed;
+  width: 100%;
+  height: 16%;
+  box-shadow: var(--box-shadow-light);
+  z-index: 10;
+}
+
+/* Estiliza el menú con flexbox, lo coloca en la esquina inferior derecha y establece la posición absoluta */
+.menu {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: flex-end;
+  position: fixed;
+  padding: 3%;
+  width: 100%;
+  z-index: 20; /* Coloca el menú sobre el fondo */
+}
+
+/* Estiliza los enlaces del menú, establece el color del texto y agrega transición para el cambio de color */
+.menu a {
+  color: white;
+  text-decoration: none;
+  transition: color 0.3s ease; /* Transición para el cambio de color */
+}
+
+/* Cambia el color del texto al pasar el mouse sobre los enlaces */
+.menu a:hover {
+  color: #ffd700; /* Color al pasar el mouse sobre el enlace */
+}
+
+/* Media query para estilos responsive */
+@media (min-width: 769px) {
+  /* Ajusta el diseño del menú cuando el ancho de la pantalla es igual o mayor a 768px */
+  .menu {
+    font-size: 1.2em;
+    justify-content: flex-end; /* Mantiene la posición horizontal en la esquina derecha */
+    width: 95%;
+    position: fixed;
+  }
+
+  /* Ajusta el margen derecho y elimina el margen inferior para los enlaces en pantallas más grandes */
+  .menu a {
+    margin-right: 3%;
+  }
+
+  /* ajusta enlaces de uno */
+  .navbar1 {
+    display: block; /* Alinea los enlaces como bloques en línea */
+  }
+}
+
+/* Estilo para el h1 */
+h1 {
+  position: relative;
+  color: rgb(224, 5, 5);
+  display: inline-block; /* Alinea el h1 como un bloque en línea */
+  text-shadow: var(--text-shadow-ligth);
+  margin-top: 10.5%;
+  margin-left: 1.7%;
+}
+
+/* Posiciona los enlaces al lado del h1 */
+.navbar1 {
+  min-width: 71%;
+  position: absolute;
+  display: inline-block; /* Alinea los enlaces como bloques en línea */
+  margin-top: 10%;
+  margin-left: 3%; /* Ajusta según sea necesario */
+}
+
+.nav-razones-1 a {
+  text-decoration: none;
+}
+
+.nav-razones-1 a:hover {
+  color: #d01414; /* Color al pasar el mouse sobre el enlace */
+}
+
+.nav-razones-1 {
+  display: flex;
+  justify-content: space-between;
+}
+
+.nav-raz-1,
+.nav-raz-2,
+.nav-raz-3,
+.nav-raz-4,
+.nav-raz-5 {
+  padding-left: 1%;
+  padding-right: 1%;
+  background-color: #fbfbfb;
+  border-radius: 10px;
+  box-shadow: 0px 0px 5px;
+}
+
+body.dark nav a {
+  background-color: #7c5959;
+  color: aliceblue;
+  box-shadow: 0px 0px 4px;
+}
+
+.navbar2 {
+  min-width: 71%;
+  position: absolute;
+  display: inline-block; /* Alinea los enlaces como bloques en línea */
+  margin-top: 12.5%;
+  margin-left: 3%; /* Ajusta según sea necesario */
+}
+
+.nav-razones-2 a {
+  text-decoration: none;
+}
+
+.nav-razones-2 a:hover {
+  color: #d01414; /* Color al pasar el mouse sobre el enlace */
+}
+
+.nav-razones-2 {
+  display: flex;
+  justify-content: space-between;
+}
+
+.nav-raz-6,
+.nav-raz-7,
+.nav-raz-8,
+.nav-raz-9,
+.nav-raz-10 {
+  padding-left: 1%;
+  padding-right: 1%;
+  background-color: #fbfbfb;
+  border-radius: 10px;
+  box-shadow: 0px 0px 5px;
+}
+
+.tres_en_una {
+  width: 100%;
+  margin-top: 1%;
+  box-shadow: var(--box-shadow-light);
+}
+
+
+/* pop up */
+
+.boton-contenedor {
+  display: flex;
+  justify-content: center;
+}
+
+button {
+  margin-top: 30px;
+  cursor: pointer;
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+}
+
+.open-popup-btn {
+  background-color: #007bff;
+  color: white;
+}
+
+.open-popup-btn:hover {
+  background-color: #0056b3;
+}
+
+/* Estilos del pop-up */
+.popup-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  justify-content: center;
+  align-items: center;
+  z-index: 40;
+}
+
+.popup {
+  background-color: white;
+  border-radius: 10px;
+  padding: 20px;
+  width: 80%;
+  max-width: 800px;
+  text-align: center;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+.close-popup-btn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: none;
+  font-size: 24px;
+  color: #333;
+  border: none;
+  cursor: pointer;
+}
+
+.close-popup-btn:hover {
+  color: #ff0000;
+}
+
+h2 {
+  margin-bottom: 20px;
+}
+
+/* Estilos de la tabla de precios */
+.pricing-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: stretch;
+  gap: 20px;
+}
+
+.pricing-card {
+  background-color: #f8f9fa;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 20px;
+  width: 30%;
+  text-align: left;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s;
+}
+
+.pricing-card:hover {
+  transform: scale(1.05);
+}
+
+.pricing-card h3 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.price {
+  font-size: 2rem;
+  color: #007bff;
+  margin: 10px 0;
+}
+
+.pricing-card ul {
+  list-style: none;
+  padding: 0;
+}
+
+.pricing-card ul li {
+  margin-bottom: 10px;
+  font-size: 1rem;
+  color: #666;
+}
+
+.premium {
+  background-color: #007bff;
+  color: white;
+}
+
+.premium .price {
+  color: white;
+}
+
+.btn-select {
+  background-color: #007bff;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  width: 100%;
+}
+
+.btn-select:hover {
+  background-color: #0056b3;
+}
+/* fin pop up */
+
+.segundo-h2 {
+  font-family: var(--font-family);
+  width: 37.8%;
+  letter-spacing: 2px;
+  word-spacing: 4px;
+  text-shadow: var(--text-shadow-ligth);
+  margin-left: 5%;
+}
+
+/* .main {
+  background-color: aqua;
+  position: relative;
+} */
+
+.box__fondo {
+  width: 300px;
+  height: 205px;
+  margin: 10px 30px;
+  padding: 20px 2px;
+  background-color: #faf7af;
+  overflow: auto;
+  border-radius: 20px 0px 0px 20px;
+  box-shadow: var(--box-shadow-light);
+}
+
+.box {
+  font-family: var(--font-family);
+  width: 250px;
+  height: 180px;
+  margin: 0px 25px;
+  overflow-y: scroll; /* Activa el scroll vertical */
+  padding-top: 2px; /* Espacio superior de 40px */
+  padding-bottom: 2px; /* Espacio inferior de 40px */
+  position: relative;
+  box-sizing: border-box; /* Asegura que el padding no afecte el tamaño del contenedor */
+}
+
+.box p {
+  margin: 0; /* Elimina márgenes adicionales de los párrafos */
+  position: relative; /* Asegura que el contenido esté debajo de las cubiertas */
+  z-index: 0; /* Coloca el contenido por debajo de las cubiertas */
+}
+
+.box hr {
+  background: #ffd700;
+  width: 20%;
+  height: 8px;
+  border: none;
+  margin: 20px 0;
+  border-radius: 50px 0px;
+}
+
+.box::-webkit-scrollbar {
+  width: 12px;
+}
+
+.box::-webkit-scrollbar-thumb {
+  background: #ffd700;
+}
+
+.box__text {
+  padding-right: 20px;
+  background-color: #faf7af;
+  color: rgb(6, 14, 52);
+}
+
+strong {
+  color: rgb(51, 85, 234);
+  font-size: 1em;
+}
+
+em {
+  color: rgb(251, 10, 6);
+  font-size: 1em;
+}
+
+/* foto imprenta megaservice y link */
+.link__imprenta {
+  display: inline-block;
+  position: absolute;
+  top: 97%;
+  margin-left: 60%;
+}
+
+.link__imprenta a {
+  font-family: "Oswald", sans-serif;
+  text-decoration: none;
+}
+
+.link__imprenta a:hover {
+  color: #f60808; /* Color al pasar el mouse sobre el enlace */
+}
+
+.foto-web-imprenta img {
+  display: block;
+  position: absolute;
+  top: 106%;
+  margin-left: 54%;
+}
+
+.fondo-razon {
+  background-color: #faf7af;
+  padding: 2rem 10rem;
+  font-family: var(--font-family);
+}
+
+.fondo-razon {
+  background-color: #e8f6b6;
+  font-weight: bold;
+  font-size: 1em;
+}
+
+#razon-0 {
+  position: sticky;
+  display: flex;
+  justify-content: center;
+  background-color: #c3b51c;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  top: 100px;
+}
+
+.anima {
+  background-color: #e2ef2e;
+  padding-left: 10px;
+}
+
+#razon-1 {
+  background-color: #c3b51c;
+}
+
+/* #razon-2 {
+  top: 203px;
+} */
+
+/* #razon-3 {
+  margin-top: 95px;
+  padding: 3px;
+}
+
+#razon-4 {
+  margin-top: 55px;
+  padding: 3px;
+}
+
+#razon-5 {
+  margin-top: 60px;
+  padding: 3px;
+}
+
+#razon-6 {
+  margin-top: 65px;
+  padding: 3px;
+}
+
+#razon-7 {
+  margin-top: 75px;
+  padding: 3px;
+}
+
+#razon-8 {
+  margin-top: 85px;
+  padding: 3px;
+}
+
+#razon-9 {
+  margin-top: 95px;
+  padding: 3px;
+}
+
+#razon-10 {
+  margin-top: 105px;
+  padding: 3px;
+} */
+
+.foto-fin-inicio {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  z-index: 3000;
+}
+
+.fondo-listas {
+  background-image: url(/assets/images/fondo-logo.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center center;
+}
+
+footer {
+  background-color: blue;
+  display: flex;
+  z-index: 3000;
+}
+
+footer {
+  color: aliceblue;
+  justify-content: center;
+}
+
+.header-contacto {
+  background: url("/assets/images/cielo-nav.png") no-repeat fixed;
+  position: fixed;
+  display: block;
+  top: 0px;
+  width: 100%;
+  box-shadow: var(--box-shadow-light);
+  z-index: 10; /* Coloca el fondo detrás del contenido del menú */
+}
+
+.form-contacto {
+  margin-top: 200px;
+}
+
+
+
+/* formulario */
+

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario de Contacto Moderno</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #cefaef;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .contact-form {
+            background-color: #fff;
+            padding: 40px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            max-width: 400px;
+            width: 100%;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .contact-form:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+        }
+        .contact-form h2 {
+            margin-bottom: 24px;
+            color: #333;
+            text-align: center;
+        }
+        .contact-form .input-group {
+            margin-bottom: 20px;
+        }
+        .contact-form .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+        }
+        .contact-form .input-group input,
+        .contact-form .input-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        .contact-form .input-group input:focus,
+        .contact-form .input-group textarea:focus {
+            border-color: #008cba;
+        }
+        .contact-form button {
+            width: 50%;
+            padding: 12px;
+            background-color: #008cba;
+            border: none;
+            border-radius: 4px;
+            color: #fff;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .contact-form button:hover {
+            background-color: #005f75;
+        }
+        .error-message {
+            font-size: 14px;
+            color: #d9534f;
+            margin-top: 8px;
+            display: none;
+        }
+        i {
+            color: #008cba;
+        }
+
+        .input-group label {
+            cursor: pointer;
+        }
+        
+
+
+    </style>
+</head>
+<body>
+
+    <div class="nav__formulario">
+        <nav class="nav-lista">
+            <a class="lista1" href="index.html">Inicio</a>
+            <a class="lista2" href="listas.html">Acerca de listas</a>
+            <a class="lista3" href="galeria.html">Galería</a>
+            <a class="lista4" href="contacto.html">Contacto</a>
+        </nav>
+    </div>
+
+    <form action="https://formsubmit.co/imegaservice@gmail.com" method="POST" class="contact-form" id="contactForm">
+        <h2>Formulario de Contacto</h2>
+        
+        <div class="input-group">
+            <label for="name"><i class="fas fa-user icon"></i> Nombre Completo</label>
+            <input type="text" id="name" placeholder="nombre apellido" required>
+            <div class="error-message" id="nameError">El nombre es obligatorio.</div>
+        </div>
+        
+        <div class="input-group">
+            <label for="email"><i class="fas fa-envelope icon"></i> Correo Electrónico</label>
+            <input type="email" id="email" placeholder="example@gmail.com" required>
+            <div class="error-message" id="emailError">El correo no es válido.</div>
+        </div>
+        
+        <div class="input-group">
+            <label for="message"><i class="fas fa-comment icon"></i> Mensaje</label>
+            <textarea id="message" placeholder="escribe aquí tu mensaje" rows="4" required></textarea>
+            <div class="error-message" id="messageError">El mensaje es obligatorio.</div>
+        </div>
+        
+        <button type="submit">Enviar</button>
+    </form>
+
+    <script>
+        document.getElementById('contactForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            let isValid = true;
+
+            // Validación del nombre
+            const name = document.getElementById('name');
+            const nameError = document.getElementById('nameError');
+            if (name.value.trim() === '') {
+                nameError.style.display = 'block';
+                isValid = false;
+            } else {
+                nameError.style.display = 'none';
+            }
+
+            // Validación del correo electrónico
+            const email = document.getElementById('email');
+            const emailError = document.getElementById('emailError');
+            const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+            if (!emailPattern.test(email.value.trim())) {
+                emailError.style.display = 'block';
+                isValid = false;
+            } else {
+                emailError.style.display = 'none';
+            }
+
+            // Validación del mensaje
+            const message = document.getElementById('message');
+            const messageError = document.getElementById('messageError');
+            if (message.value.trim() === '') {
+                messageError.style.display = 'block';
+                isValid = false;
+            } else {
+                messageError.style.display = 'none';
+            }
+
+            if (isValid) {
+                alert('¡Formulario enviado exitosamente!');
+                this.reset();
+            }
+        });
+    </script>
+
+</body>
+</html>

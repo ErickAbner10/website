@@ -1,0 +1,206 @@
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="512x512" href="favicon/android-icon-192x192.png">
+    <title>Galería Interactiva de Imágenes</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .current-image-container {
+            position: relative;
+            max-width: 400px;
+            height: auto;
+            margin-bottom: 20px;
+        }
+        .current-image {
+            max-width: 100%;
+            max-height: 200px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .arrow-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 10px;
+        }
+        .arrow {
+            background-color: #ffffff;
+            border: none;
+            cursor: pointer;
+            padding: 10px 20px;
+            margin: 0 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        .upload-btn-wrapper {
+            margin: 20px 0;
+        }
+        .custom-button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            display: inline-block;
+        }
+        .description-input, .description-text {
+            width: 100%;
+            max-width: 400px;
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .description-text {
+            border: none;
+            background-color: transparent;
+            color: #333;
+            text-align: center;
+        }
+        a {
+            color: rgb(198, 73, 73);
+            text-decoration: none;
+            padding-right: 40px;
+        }
+
+        .borrar {
+            margin: 20px;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a class="lista-galeria-1" href="index.html">Inicio</a></li>
+        <a class="lista-galeria-2" href="listas.html">Acerca de listas</a></li>
+        <a class="lista-galeria-3" href="galeria.html">Galería</a></li>
+        <a class="lista-galeria-4" href="contacto.html">Contacto</a></li>
+      </nav>
+
+    <h1>Galería Interactiva de Imágenes</h1>
+
+    <div class="upload-btn-wrapper">
+        <button class="custom-button">Subir Imagen</button>
+        <input type="file" id="imageInput" accept="image/*" style="display: none;">
+    </div>
+
+    <div class="current-image-container">
+        <img class="current-image" id="currentImage" src="" alt="Imagen actual">
+    </div>
+
+    <div class="arrow-container">
+        <button class="arrow left">&larr;</button>
+        <button class="arrow right">&rarr;</button>
+    </div>
+
+    <div class="borrar">
+    <button id="deleteImageBtn" class="custom-button">Eliminar Imagen</button>
+    </div>
+
+    <input type="text" id="descriptionInput" class="description-input" placeholder="Escribe una descripción..." />
+    <div id="descriptionText" class="description-text"></div>
+
+    <script>
+        const imageInput = document.getElementById('imageInput');
+        const currentImage = document.getElementById('currentImage');
+        const descriptionInput = document.getElementById('descriptionInput');
+        const descriptionText = document.getElementById('descriptionText');
+        const leftArrow = document.querySelector('.arrow.left');
+        const rightArrow = document.querySelector('.arrow.right');
+        const deleteImageBtn = document.getElementById('deleteImageBtn');
+    
+        let images = JSON.parse(localStorage.getItem('images')) || [];
+        let currentIndex = 0;
+    
+        // Función para guardar imágenes en localStorage
+        function saveToLocalStorage() {
+            localStorage.setItem('images', JSON.stringify(images));
+        }
+    
+        // Cargar la imagen al hacer clic en el botón de subida
+        document.querySelector('.custom-button').addEventListener('click', () => {
+            imageInput.click();
+        });
+    
+        // Guardar la imagen y actualizar el localStorage
+        imageInput.addEventListener('change', () => {
+            const file = imageInput.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onloadend = () => {
+                    images.push({ src: reader.result, description: '' });
+                    saveToLocalStorage();
+                    displayImage(images.length - 1);
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    
+        // Actualizar la descripción y guardar en localStorage
+        descriptionInput.addEventListener('input', () => {
+            if (images.length > 0) {
+                images[currentIndex].description = descriptionInput.value;
+                descriptionText.textContent = descriptionInput.value;
+                saveToLocalStorage();
+            }
+        });
+    
+        // Navegar hacia la imagen anterior
+        leftArrow.addEventListener('click', () => {
+            if (images.length > 0) {
+                currentIndex = (currentIndex === 0) ? images.length - 1 : currentIndex - 1;
+                displayImage(currentIndex);
+            }
+        });
+    
+        // Navegar hacia la imagen siguiente
+        rightArrow.addEventListener('click', () => {
+            if (images.length > 0) {
+                currentIndex = (currentIndex === images.length - 1) ? 0 : currentIndex + 1;
+                displayImage(currentIndex);
+            }
+        });
+    
+        // Eliminar la imagen actual
+        deleteImageBtn.addEventListener('click', () => {
+            if (images.length > 0) {
+                images.splice(currentIndex, 1);
+                if (currentIndex >= images.length) {
+                    currentIndex = 0;
+                }
+                saveToLocalStorage();
+                displayImage(currentIndex);
+            }
+        });
+    
+        // Función para mostrar la imagen seleccionada
+        function displayImage(index) {
+            if (images.length > 0) {
+                currentImage.src = images[index].src;
+                currentImage.style.display = 'block';
+                descriptionInput.value = images[index].description;
+                descriptionText.textContent = images[index].description;
+            } else {
+                currentImage.src = '';
+                currentImage.style.display = 'none';
+                descriptionInput.value = '';
+                descriptionText.textContent = '';
+            }
+        }
+    
+        // Cargar imágenes guardadas desde el localStorage al cargar la página
+        window.addEventListener('load', () => {
+            if (images.length > 0) {
+                displayImage(currentIndex);
+            }
+        });
+    </script>
+</body>
+</html>

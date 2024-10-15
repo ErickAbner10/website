@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="Erick Chávez">
+  <meta name="description" content="esta es mi primera página web">
+  <meta name="keywords" content="imprenta, páginas web, aplicaciones, formularios web, letreros, etiquetas, estampados, erick chávez, ">
+  <link rel="shortcut icon" href="gloicono.ico" type="image/x-icon">
+  <title>Website Services ECh</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" type="image/png" sizes="512x512" href="favicon/android-icon-192x192.png">
+</head>
+
+<body>
+
+<header class="header-contacto">
+  <!-- <img class="logo-nav-contacto" src="/assets/images/cielo-nav.png" alt="logo-contacto"> -->
+
+  <nav class="menu-nav-contacto">
+    <ul>
+      <li><a href="index.html">Inicio</a></li>
+      <li><a href="listas.html">Acerca de listas</a></li>
+      <li><a href="galeria.html">Galería</a></li>
+      <li><a href="contacto.html">Contacto</a></li>
+    </ul>
+  </nav>
+</header>
+
+<!-- Formulario -->
+<div class="form-contacto">
+<form class="ingresa-nombre" action="/enviar-respuesta">
+  <input type="text" placeholder="Ingresa tu nombre" required><hr>
+  <input type="text" placeholder="Ingresa tu dirección" required><hr>
+  <input type="text" placeholder="Ingresa tu ciudad" required><hr>
+
+  <button type="submit">Enviar</button>
+</form>
+
+<h2>FORMULARIO DE CONTACTO</h2>
+</div>
+
+<hr>
+
+<!-- Contenido multimedia -->
+<label for="video"><input id="video" type="radio" name="audio-video">ver</label>
+<video controls>
+  <source src="assets/videos/ploter.mp4">
+</video>
+
+<hr>
+
+<label for="audio"><input id="audio" type="radio" name="audio-video"> oir <audio src="assets/audios/audio.mp3"></audio></label>
+<audio controls>
+  <source src="assets/audios/audio.mp3">
+</audio>
+
+<hr>
+
+<!-- Botón para alternar modo oscuro -->
+<button id="toggle-theme">
+  <img id="toggle-icon" src="assets/images/moon.svg" alt="Toggle theme">
+  <span id="toggle-text">Dark Mode</span>
+</button>
+
+<hr>
+
+<!-- Footer -->
+<footer>
+  <p><small>Derechos de autor © 2023. Todos los derechos reservados.</small></p>
+</footer>
+
+<!-- Enlace al archivo JavaScript -->
+<script src="script.js"></script>
+
+</body>
+</html>
